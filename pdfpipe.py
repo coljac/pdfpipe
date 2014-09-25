@@ -77,6 +77,10 @@
 # Make sure default margins are ok, or allow user to set
 # Centre the title
 # Page number right/left for printing, or options for top/bottom
+# Tell the host OS to open the resulting pdf file if possible
+
+# Changelog
+# Added -e, which just echoes the name of the pdf file back before exiting
 
 from fpdf import FPDF
 
@@ -137,7 +141,10 @@ if __name__ == "__main__":
                        default=True, action='store_true')
     group.add_argument('-p', '--proportional', help='use proportional font',
                        action='store_true', default=False)
-
+    group.add_argument('-e', '--echo-pdf-file', help='echoes the pdf file name back',
+                       action='store_true', default=False)
+    group.add_argument('-x', '--open-pdf-file', help='attempts to open the resulting file',
+                       action='store_true', default=False)
     args = parser.parse_args()
 
     paper_size = args.paper
@@ -205,3 +212,16 @@ if __name__ == "__main__":
 
     # Write out the file
     pdf.output(output_file_name, 'F')
+
+    if args.echo_pdf_file:
+      print(output_file_name)
+
+    if args.open_pdf_file:
+        import os, subprocess
+        if sys.platform.startswith('darwin'):
+            subprocess.call(('open', output_file_name))
+        elif os.name == 'nt':
+            os.startfile(output_file_name)
+        elif os.name == 'posix':
+            subprocess.call(('xdg-open', output_file_name))
+

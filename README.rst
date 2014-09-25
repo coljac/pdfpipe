@@ -36,18 +36,18 @@ In your command-line:
 
 ::
 
-   echo "Hello from a PDF file named output.pdf" | pdfpipe
+   echo "Hello from a PDF file named output.pdf" | pdfpipe.py
 
 Or
 
 ::
 
-   pdfpipe -p -b -o printable.pdf -s 14 -g Letter --title "Reports for today" report*.txt
+   pdfpipe.py -p -b -o printable.pdf -s 14 -g Letter --title "Reports for today" report*.txt
 
 Type
 ::
 
-   pdfpipe --help
+   pdfpipe.py --help
 
 for more information on the available options.
 
